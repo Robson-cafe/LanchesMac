@@ -1,1 +1,5 @@
 # LanchesMac
+
+Este projeto apresenta a criação de um site para vendas de lanches funcional. A solução trata-se de um site web dinâmico e desenvolver um conceitos relacionados ao desenvolvimento web usando a tecnologia ASP .NET Core MVC e o Entity Framework Core.
+
+Implementado  no padrão MVC, definir as entidades do modelo de domínio usando o Entity Framework Core, definir a validação e configuração das entidades usando o Data Annotations, realizar a migração para criar o banco de dados e as tabelas usando a abordagem Code-Frist, popular as tabelas do banco de dados, usar o padrão Repository e o padrão ViewModel, trabalhar com Session criando um carrinho de compras, Definir rotas na aplicação, usar as View Components no projeto, implementar a segurança usando a ASP .NET Core Identity criando o Login, o Registro e o Logout do usuário, criar e usar Partial Views,  realizar a paginação e filtro dos dados, criar relatórios usando consultas LINQ, criar gráficos usando o GoogleChart, criar relatórios no formato PDF usando o FastReport OpenSource.
