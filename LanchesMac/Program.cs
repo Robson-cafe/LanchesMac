@@ -41,8 +41,28 @@ app.UseSession();
 
 app.UseAuthorization();
 
+//ex rotas
+
+//app.MapControllerRoute(
+//    name: "admin",
+//    pattern: "admin",
+//    defaults: new {Ccontroller = "admin", Action = "Index" });
+
+//app.MapControllerRoute(
+//    name: "home",
+//    pattern: "{home}",
+//    defaults: new {Controller = "Home", Action = "Index"});
+
+app.MapControllerRoute(
+    name: "categoriaFiltro",
+    pattern: "Lanche/{action}/{categoria?}",
+    defaults: new {Controller = "Lanche", Action = "List" }
+);
+
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();

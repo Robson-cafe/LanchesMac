@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AdminController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
   </ItemGroup>
 
