@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="wwwroot\images\cart-5-16.ico" />
   </ItemGroup>
 
   <ItemGroup>
