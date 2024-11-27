@@ -59,7 +59,7 @@ namespace LanchesMac.Models
         [Display(Name = "Data do Pedido")]
         [DataType(DataType.Text)]
         [DisplayFormat(DataFormatString = "{0 : dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
-        public DataSetDateTime? PedidosEntregueEm { get; set; }
+        public DateTime? PedidosEntregueEm { get; set; }
 
         public List<PedidoDetalhe> PedidosItens {  get; set; }
 
