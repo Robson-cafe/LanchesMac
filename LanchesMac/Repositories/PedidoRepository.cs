@@ -22,7 +22,7 @@ namespace LanchesMac.Repositories
             Pedido pedido
         )
         {
-            pedido.PedidosEntregueEm = DateTime.Now;
+            pedido.PedidoEnviado = DateTime.Now;
             _context.Pedidos.Add(pedido);
             _context.SaveChanges();
 

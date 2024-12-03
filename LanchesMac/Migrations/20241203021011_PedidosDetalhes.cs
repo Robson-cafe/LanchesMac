@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace LanchesMac.Migrations
 {
     /// <inheritdoc />
-    public partial class PedidoDetalhes : Migration
+    public partial class PedidosDetalhes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +28,8 @@ namespace LanchesMac.Migrations
                     Email = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     PedidoTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalItensPedido = table.Column<int>(type: "int", nullable: false),
-                    PedidosEntregueEm = table.Column<int>(type: "int", nullable: true)
+                    PedidoEnviado = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PedidosEntregueEm = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -33,7 +33,7 @@ namespace LanchesMac.Models
         public string Estado { get; set; }
 
         [StringLength(50)]
-        public string Cidede { get; set; }
+        public string Cidade { get; set; }
 
         [Required(ErrorMessage = "Informe o telefone")]
         [StringLength(25)]
@@ -48,7 +48,7 @@ namespace LanchesMac.Models
         public string Email { get; set; }
 
         [ScaffoldColumn(false)]
-        [Column(TypeName = "decimal(18,2")]
+        [Column(TypeName = "decimal(18,2)")]
         [Display(Name = "Total do Pedido")]
         public decimal PedidoTotal {  get; set; }
 
@@ -59,6 +59,11 @@ namespace LanchesMac.Models
         [Display(Name = "Data do Pedido")]
         [DataType(DataType.Text)]
         [DisplayFormat(DataFormatString = "{0 : dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime PedidoEnviado { get; set; }
+
+        [Display(Name = "Data Envio Pedido")]
+        [DataType(DataType.Text)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? PedidosEntregueEm { get; set; }
 
         public List<PedidoDetalhe> PedidosItens {  get; set; }
