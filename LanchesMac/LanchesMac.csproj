@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\Lanches\**" />
     <Compile Remove="wwwroot\NovaPasta1\**" />
+    <Content Remove="Areas\Admin\Views\Lanches\**" />
     <Content Remove="wwwroot\NovaPasta1\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Lanches\**" />
     <EmbeddedResource Remove="wwwroot\NovaPasta1\**" />
+    <None Remove="Areas\Admin\Views\Lanches\**" />
     <None Remove="wwwroot\NovaPasta1\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Controllers\LanchesController.cs" />
     <Compile Remove="Controllers\AdminController.cs" />
     <Compile Remove="Migrations\20241126232403_PedidoDetalhes.cs" />
     <Compile Remove="Migrations\20241126232403_PedidoDetalhes.Designer.cs" />

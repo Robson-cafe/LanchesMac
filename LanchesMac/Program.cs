@@ -2,6 +2,8 @@ using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repositories;
 using LanchesMac.Repositories.Interfaces;
+using LanchesMac.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +32,16 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin",
+        politica =>
+        {
+            politica.RequireRole("Admin");
+        });
+});
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
@@ -49,10 +61,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seedUserRoleInitial = scope.ServiceProvider.GetRequiredService<ISeedUserRoleInitial>();
+
+    // Inicializa os papéis (roles) e os usuários
+    seedUserRoleInitial.SeedRoles();
+    seedUserRoleInitial.SeedUsers();
+}
 
 app.UseSession();
 
@@ -70,6 +92,11 @@ app.UseAuthorization();
 //    name: "home",
 //    pattern: "{home}",
 //    defaults: new {Controller = "Home", Action = "Index"});
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
     name: "categoriaFiltro",
