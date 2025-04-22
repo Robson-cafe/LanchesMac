@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using LanchesMac.Context;
 using LanchesMac.Models;
 using Microsoft.AspNetCore.Authorization;
+using ReflectionIT.Mvc.Paging;
+using LanchesMac.ViewModels;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
@@ -22,10 +24,51 @@ namespace LanchesMac.Areas.Admin.Controllers
             _context = context;
         }
 
-        // GET: Admin/AdminPedidos
-        public async Task<IActionResult> Index()
+        public IActionResult PedidoLanches(int? id)
         {
-            return View(await _context.Pedidos.ToListAsync());
+            var pedido = _context.Pedidos
+                .Include(pd => pd.PedidosItens)
+                .ThenInclude(l => l.Lanche)
+                .FirstOrDefault(p => p.PedidoId == id);
+
+            if (pedido == null)
+            {
+                Response.StatusCode = 404;
+                return View("Pedido Not found", id.Value);
+            }
+
+            PedidoLancheViewModel pedidoLancheViewModel = new PedidoLancheViewModel()
+            {
+                Pedido = pedido,
+                PedidoDetalhes = pedido.PedidosItens
+            };
+
+            return View(pedidoLancheViewModel);
+        }
+        // GET: Admin/AdminPedidos
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Pedidos.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string filter, int pageIndex = 1, string sort = "Nome")
+        {
+            var results = _context.Pedidos.AsNoTracking().AsQueryable();
+
+            if(!string.IsNullOrEmpty(filter))
+            {
+                results = results.Where(p => p.Nome.Contains(filter) /*|| p.SobreNome.Contains(filter)*/);
+            }
+            
+            var model = await PagingList.CreateAsync(
+                results, 5, pageIndex, sort, "Nome");
+
+            model.RouteValue = new RouteValueDictionary
+            {
+                { "filter", filter }
+            };
+
+            return View(model);
         }
 
         // GET: Admin/AdminPedidos/Details/5

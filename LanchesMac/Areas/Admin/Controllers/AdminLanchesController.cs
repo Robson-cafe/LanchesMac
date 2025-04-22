@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LanchesMac.Context;
 using LanchesMac.Models;
 using Microsoft.AspNetCore.Authorization;
+using ReflectionIT.Mvc.Paging;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
@@ -23,10 +24,29 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLanches
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var appDbContext = _context.Lanches.Include(l => l.Categoria);
+        //    return View(await appDbContext.ToListAsync());
+        //}
+        public async Task<IActionResult> Index(string filter, int pageIndex = 1, string sort = "Nome")
         {
-            var appDbContext = _context.Lanches.Include(l => l.Categoria);
-            return View(await appDbContext.ToListAsync());
+            var results = _context.Lanches.Include(l => l.Categoria).AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                results = results.Where(p => p.Nome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(
+                results, 5, pageIndex, sort, "Nome");
+
+            model.RouteValue = new RouteValueDictionary
+            {
+                { "filter", filter }
+            };
+
+            return View(model);
         }
 
         // GET: Admin/AdminLanches/Details/5
